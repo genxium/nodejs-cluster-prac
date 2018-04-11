@@ -1,0 +1,11 @@
+{
+  "name": "nodejs-cluster-prac",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "crypto-js": "^3.1.9-1",
+    "log4js": "^2.5.3",
+    "socket.io-client": "^2.1.0",
+    "socket.io-server": "^1.0.0-b"
+  }
+}
