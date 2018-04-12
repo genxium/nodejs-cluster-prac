@@ -45,7 +45,7 @@ if (cluster.isMaster) {
     if (!roomidToWorkerId.hasOwnProperty(roomid)) {
       const nWorkers = Object.keys(cluster.workers).length;
       logger.debug(`There is no cached worker for this room. Arranging among ${nWorkers} workers.`);
-      const workerId = (roomid % nWorkers);
+      const workerId = ((roomid % nWorkers) + 1);
       logger.debug(`Chosen worker id == ${workerId}.`);
       roomidToWorkerId[roomid] = {
         workerId: workerId,
