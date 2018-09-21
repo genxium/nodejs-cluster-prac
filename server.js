@@ -121,9 +121,9 @@ if (cluster.isMaster) {
         worker.send(toEchoMsg);     
       });
       wsSession.on('disconnect', (reason) => {
-        logger.warn(`For uid == ${uid} in roomid == ${roomid}, the wsSessoin is disconnected.`);
+        logger.warn(`For uid == ${uid} in roomid == ${roomid}, the wsSession is disconnected.`);
         delete uidToWsSession[uid];
-        logger.warn(`For uid == ${uid}, the "uid->wsSessoin" cache is cleared.`);
+        logger.warn(`For uid == ${uid}, the "uid->wsSession" cache is cleared.`);
       });
       wsSession.on('error', (sessionErr) => {
         logger.error(`For uid == ${uid} in roomid == ${roomid}, a session error occurred ${sessionErr}.`);
@@ -134,7 +134,7 @@ if (cluster.isMaster) {
           logger.error(`For uid == ${uid} and roomid == ${roomid}, cannot be disconnected after a session error because ${err}.`);
         } finally {
           delete uidToWsSession[uid];
-          logger.warn(`For uid == ${uid}, the "uid->wsSessoin" cache is cleared.`);
+          logger.warn(`For uid == ${uid}, the "uid->wsSession" cache is cleared.`);
         }
       });
     });
