@@ -68,19 +68,26 @@ if (cluster.isMaster) {
     logger.warn(`Worker pid == ${worker.process.pid} died`);
   });
 
+  const host = 'localhost';
+  const port = 3000;
   const httpServer = require('http').createServer();
+  /*
+   * Initialization of `socket.io-server` under a `worker-process` launched & managed by `pm2`. 
+   *
+   * - The socket.io-server will reset its session watchdog for another "(pingInterval + pingTimeout)", within which ANY packet from the client side (including but not limited to "ping") should be received to maintain the session, and as well reset the session watchdog. Hence "pingInterval" is recommended to be way less than "pingTimeout" to ensure sufficient tolerance of packet loss.  
+   */
   const io = require('socket.io')(httpServer, {
     path: '/sio',
-    pingInterval: 2000,
+    pingInterval: 200,
     pingTimeout: 2000
   });
-  httpServer.listen(3000, 'localhost', 1024, (err) => {
+  httpServer.listen(port, host, 1024, (err) => {
     if (null != err) {
       logger.error(err);
       return;
     }
 
-    logger.info("Listening on port 3000.");
+    logger.info("Listening on ", host, ":", port);
     io.use((wsSession, next) => {
       const user = findUser(wsSession.handshake);
       if (!user) return next(new Error("Authentication error"));
